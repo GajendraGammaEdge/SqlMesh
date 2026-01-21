@@ -1,0 +1,31 @@
+- offer_id: new_account_bonus_2025
+  offer_start_date: "2025-01-01"
+  offer_end_date: "2025-06-30"
+  monitoring_end_date: "2025-09-30"
+
+  monitoring_rules:
+    - rule_id: min_balance_rule
+      rule_type: MinimumBalanceMonitoring
+      rule_parameters:
+        account_types: [CHECKING]
+        operator: ">="
+        threshold: 5000
+        monitoring_period_days: 90
+
+    - rule_id: debit_card_rule
+      rule_type: NumberOfTransactionsMonitoring
+      rule_parameters:
+        transaction_codes: [DEBIT_CARD, DEBIT_POS]
+        operator: ">="
+        threshold: 10
+        monitoring_period_days: 60
+
+  qualification_condition:
+    operator: AND
+    conditions:
+      - rule_id: min_balance_rule
+      - rule_id: debit_card_rule
+
+  reward:
+    type: CASH
+    amount: 200
